@@ -14,13 +14,13 @@ import java.net.URL;
 public class StudyHadoopApplication {
 
     public static void main(String[] args) throws Exception {
-//        fileUpload();
+        fileUpload();
 //        fileDownload();
 //        mvDir();
 //        fileUploadByIo();
 //        fileDownloadByIo();
 //        fileDownloadByIoAndLength();
-        fileDownloadByIoAndBegin();
+//        fileDownloadByIoAndBegin();
     }
 
 
@@ -34,6 +34,7 @@ public class StudyHadoopApplication {
         FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"),cfg,"root");
         return fs;
     }
+
 
     /**
      * 关闭

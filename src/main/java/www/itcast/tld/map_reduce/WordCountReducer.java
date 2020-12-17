@@ -14,12 +14,13 @@ import java.util.Iterator;
  **/
 public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    protected void reduce(Text key, Iterable<IntWritable> values, Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+    private  IntWritable v = new IntWritable();
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         int sum = 0;
-        Iterator<IntWritable> i$ = values.iterator();
-        while(i$.hasNext()) {
-            sum += i$.next().get();
+        for (IntWritable value : values){
+            sum += value.get();
         }
-        context.write(key, new IntWritable(sum));
+        v.set(sum);
+        context.write(key,v);
     }
 }

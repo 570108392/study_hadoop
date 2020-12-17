@@ -1,6 +1,7 @@
 package www.itcast.tld.map_reduce;
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.OutputCollector;
@@ -15,14 +16,15 @@ import java.util.stream.Stream;
  * @createTime: 2020/12/4
  * @descripton:
  **/
-public class WordCountMapper extends Mapper<Text, IntWritable,Text, IntWritable> {
+public class WordCountMapper extends Mapper<LongWritable, Text,Text, IntWritable> {
     IntWritable intWritable = new IntWritable(1);
-    Text tes = new Text();
-    protected void map(Text key, IntWritable value, Mapper<Text, IntWritable,Text, IntWritable>.Context context)  {
+    Text key = new Text();
+    protected void map(LongWritable begin, Text text, Context context)  {
 
-        Stream.of(key.toString().split(" ")).forEach(str -> {
+        Stream.of(text.toString().split(" ")).forEach(str -> {
             try {
-                context.write(new Text(str),intWritable);
+                key.set(str);
+                context.write(key,intWritable);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
