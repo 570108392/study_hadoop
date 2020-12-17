@@ -24,16 +24,35 @@ public class StudyHadoopApplication {
     }
 
 
+    /**
+     * 初始化文件系统
+     * @return
+     * @throws Exception
+     */
     private static FileSystem init()throws Exception{
         Configuration cfg = new Configuration();
         FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"),cfg,"root");
         return fs;
     }
+
+    /**
+     * 关闭
+     * @param outputStream
+     * @param inputStream
+     * @param fs
+     * @throws Exception
+     */
     private static void destory(OutputStream outputStream,InputStream inputStream,FileSystem fs)throws Exception{
         IOUtils.closeStream(outputStream);
         IOUtils.closeStream(inputStream);
         fsClose(fs);
     }
+
+    /**
+     * 关闭文件流
+     * @param fs
+     * @throws Exception
+     */
     private static void fsClose(FileSystem fs)throws Exception{
         fs.close();
     }
