@@ -1,12 +1,12 @@
-package www.itcast.tld.map_reduce;
+package www.itcast.tld.out_put_format;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import www.itcast.tld.bean.FlowBean;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
  * @createTime: 2020/12/4
  * @descripton:
  **/
-public class WordCountDriver {
+public class FlowBeanDriver {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
@@ -26,23 +26,24 @@ public class WordCountDriver {
         Job job = Job.getInstance(configuration);
 
         // 2 设置jar加载路径
-        job.setJarByClass(WordCountDriver.class);
+        job.setJarByClass(FlowBeanDriver.class);
 
         // 3 设置map和reduce类
-        job.setMapperClass(WordCountMapper.class);
-        job.setReducerClass(WordCountReducer.class);
+        job.setMapperClass(FlowBeanMapper.class);
+        job.setReducerClass(FlowBeanReducer.class);
 
         // 4 设置map输出
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        job.setMapOutputValueClass(FlowBean.class);
 
         // 5 设置最终输出kv类型
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(FlowBean.class);
 
+        job.setOutputFormatClass(FlowBeanOutputFormat.class);
         // 6 设置输入和输出路径
-        FileInputFormat.setInputPaths(job, new Path("E:\\hadoop-2.9.2\\test\\wordcount.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("E:\\hadoop-2.9.2\\test\\wordcount"));
+        FileInputFormat.setInputPaths(job, new Path("E:\\hadoop-2.9.2\\test\\phone_data.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("E:\\hadoop-2.9.2\\test\\phone_data"));
 
         // 7 提交
         boolean result = job.waitForCompletion(true);
